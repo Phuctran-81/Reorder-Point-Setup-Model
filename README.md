@@ -1,7 +1,7 @@
 # Reorder Point Setup Model
 ## I. OVERALL
 ## 1. PROBLEM:
-The goal of this project is to building a  model establishing inventory reorder point. The model will balance between ensuring the product availability and minizing carrying cost.
+The goal of this project is to build a  model establishing inventory reorder point. The model will balance between ensuring the product availability and minizing carrying cost.
 ## 2. ACTIONS:
 ### A. Build the Reorder Point Setup Model
 #### a. Categorizing the store-item
@@ -16,10 +16,9 @@ The goal of this project is to building a  model establishing inventory reorder 
 #### b. Seasonality-Adjusted ROP Model
 ***Note:** To optimize the accuracy, I calculated the multipliers separately for specific item at specific store (the multipliers such as Seasonality Index, Baseline 30d, MAE).* \
 Through the data exploratory analysis, I found that the sales is seasonal. Averagely, sales of monday is lower than the average week sales 20.84% while sales of saturdays and mondays are higher than the average week sales 12.46% and 18.40% respectively.\
-From that result, i decided to use a formula for establishing reorder point called Seasonality-Adjusted ROP model: \
-`ROP = (Baseline 30d * Seasinality Index) + (Z * 1.25 * MAE) `
-<img width="1273" height="82" alt="image" src="https://github.com/user-attachments/assets/4b2ad83f-14cd-4085-a37c-e99b11f8dc27" />
+From that result, i decided to use a formula for establishing reorder point called Seasonality-Adjusted ROP model: 
 
+<img width="1273" height="82" alt="image" src="https://github.com/user-attachments/assets/4b2ad83f-14cd-4085-a37c-e99b11f8dc27" />
 
 - **ROP:** The forecast Inventory per day.
 - **Baseline 30d:** Average actual sales over the last 30 days
@@ -27,22 +26,19 @@ From that result, i decided to use a formula for establishing reorder point call
 - **Z:** The distance measured by Standard Deviation from the mean of the distribution.
 - **MAE:** The average error between Actual Sales and Forecast ROP over the last 30 days.
 #### c. Traditional ROP Model
-***Note:** To optimize the accuracy, I calculated the multipliers separately for specific item at specific store (the multipliers such as Baseline 30d, Standard Deviation 30d).*
-Moreover, i also calculated the rop based on the formular called traditional ROP model: \
-`ROP = Baseline 30d + Z * (Standard Deviation 30d)`
+***Note:** To optimize the accuracy, I calculated the multipliers separately for specific item at specific store (the multipliers such as Baseline 30d, Standard Deviation 30d).* \
+Moreover, i also calculated the rop based on the formular called traditional ROP model: 
+
 <img width="1172" height="68" alt="image" src="https://github.com/user-attachments/assets/e5ec7d58-0b31-441a-8b69-345be0aceecc" />
-
-
-
 
 - **ROP:** The forecast Inventory per day.
 - **Baseline 30d:** Average actual sales over the last 30 days
 - **Z:** The distance measured by Standard Deviation from the mean of the distribution.
 - **Standard Deviation 30d:** The average deviation of values compared to the mean of the distribution over the last 30 days.
 #### d. Promotion ROP model
-***Note:** To optimize the accuracy, I calculated the multipliers separately for specific item at specific store (the multipliers such as Lift%, Baseline 30d, Standard Deviation 30d, MAE).* \
+***Note:** To optimize the accuracy, I calculated the multipliers separately for specific item at specific store (the multipliers such as Lift%, Baseline 30d, Standard Deviation 30d, MAE).* 
 #### d.1 Flagging Promotion Date
-**Purpose:** Because this dataset missing data about promotion date, i detected extreme outlier point to make the forecast model more precisely. \
+**Purpose:** Because this dataset missing data about promotion date, i detected extreme outlier point and assigned it as a promotion date to make the forecast model more precisely. \
 **Method:** The logic for flagging promotion date is that if actual sales is bigger than the average actual sales over the last 30 days + 2 (z score) Standard Deviation (just 2.7% probability the values fall in this range) this is promotion date.
 <img width="1375" height="87" alt="image" src="https://github.com/user-attachments/assets/4ed283aa-65c0-42ea-90cc-2fc34c60a13c" />
 - **Actual Sales:** The actual sales of item.
@@ -58,7 +54,7 @@ Moreover, i also calculated the rop based on the formular called traditional ROP
 - **n:** Total promotion days of specific item at specific store. *( I used n = 6 to calculated the average lift factor in the last 6 promotion date).*
 
 #### d.3 Promotion ROP Model
-After calculating Lift factor, i use the following formula for establishing Promotion ROP: 
+After calculating Lift factor, i used the following formula for establishing Promotion ROP: 
 <img width="1041" height="66" alt="image" src="https://github.com/user-attachments/assets/cb3b8354-ad4e-4982-b651-7260453f90ea" />
 - **ROP:** The forecast Inventory per promotion day.
 - **Baseline 30d:** The average actual sales over the last 30 days.
