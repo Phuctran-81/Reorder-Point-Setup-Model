@@ -6,7 +6,7 @@ The goal of this project is to build a  model establishing inventory reorder poi
 ### A. Build the Reorder Point Setup Model
 #### a. Categorizing the store-item
 **Purpose:** The primary goal of the store-item classification is to prioritize management focus and capital allocation. By segmenting my store-item, I can apply different "Service Level" targets (Z-scores) to specific categories. This strategy approach ensures high availability for critical, high-value items (Class A) while preventing over-investment in slow-moving stock (Class C). 
-- I used Z = 1.5 for class A item to ensure 93% the store have enough inventory each day, Z = 1 for class B items to cover 84% And Z = 0.8 for class C item to cover 79%.
+- I used Z = 1.3 for class A item to ensure 90% the store have enough inventory each day, Z = 0.9 for class B items to cover 81% And Z = 0.65 for class C item to cover 74%.
 
 **Method:** I categorized the store-item by sorting store-items by revenue in descending order to calculate the running percentage of total company revenue.
 - Class A (High Value): The group of items generating 80% of revenue.
@@ -15,7 +15,7 @@ The goal of this project is to build a  model establishing inventory reorder poi
 
 #### b. Seasonality-Adjusted ROP Model
 ***Note:** To optimize the accuracy, I calculated the multipliers separately for specific item at specific store (the multipliers such as Seasonality Index, Baseline 30d, MAE).* \
-Through the data exploratory analysis, I found that the sales is seasonal. Averagely, sales of monday is lower than the average week sales 20.84% while sales of saturdays and mondays are higher than the average week sales 12.46% and 18.40% respectively.\
+Through the data exploratory analysis, I found that the sales is seasonal. Averagely, sales of monday is lower than the average week sales 19.45% while sales of saturdays and sundays are higher than the average week sales 11.8% and 16.17% respectively.\
 From that result, i decided to use a formula for establishing reorder point called Seasonality-Adjusted ROP model: 
 
 <img width="1273" height="82" alt="image" src="https://github.com/user-attachments/assets/4b2ad83f-14cd-4085-a37c-e99b11f8dc27" />
@@ -71,8 +71,8 @@ After calculating Lift factor, i used the following formula for establishing Pro
 - **Logic:** Simulated weekly ordering cucles by comparing forecasted ROP against actual weekly demand over the final year of the 5-year dataset.
 ## 3. RESULTS:
 #### a. Seasonality-Adjusted ROP model
-- The backtest is implemented in total 26,474 weeks (across 50 items in 10 stores), there are **26,245 overstock weeks** with the **average excess rate at 20.39%** and **229 outstock weeks** with the **average shortage rate at 2.24%**. 
-- The Seasonality-Adjusted ROP model satisfies the **service level of 99%** which is similar to Traditional ROP model while simultaneously **reducing weekly excess inventory by 13%** compared to the traditional ROP method.
+- The backtest is implemented in total 26,474 weeks (across 50 items in 10 stores), there are **26,275 overstock weeks** with the **average excess rate at 21.77%** and **199 outstock weeks** with the **average shortage rate at 2.07%**. 
+- The Seasonality-Adjusted ROP model satisfies the **service level of 99%** which is similar to Traditional ROP model while simultaneously **reducing weekly excess inventory by 2.82%** compared to the traditional ROP method.
 #### b. Promotion ROP model
 - The backtest is implemented in 7,321 promotion date (across 50 items in 10 stores), there are 6,799 overstock dates with the average excess rate at 14.91% and 522 outstock dates with the average shortage rate at 3.92%.
 ## 4. RECOMMENDATIONS:
